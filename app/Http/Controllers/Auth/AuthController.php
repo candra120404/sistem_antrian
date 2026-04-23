@@ -18,10 +18,6 @@ class AuthController extends Controller
     /** Tampilkan form login. */
     public function showLogin()
     {
-        if (Auth::check()) {
-            return $this->redirectByRole();
-        }
-
         return view('auth.login');
     }
 
@@ -49,10 +45,6 @@ class AuthController extends Controller
     /** Tampilkan form registrasi pelanggan. */
     public function showRegister()
     {
-        if (Auth::check()) {
-            return $this->redirectByRole();
-        }
-
         return view('auth.register');
     }
 
