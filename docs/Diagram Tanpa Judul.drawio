@@ -1,0 +1,91 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36">
+  <diagram id="HSp5IWkPPNTZE8OhQMM5" name="Halaman-3">
+    <mxGraphModel dx="2200" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-1" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;fillColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=light-dark(#000000,#171717);fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="90" width="140" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-2" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;fillColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=light-dark(#000000,#171717);fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="90" width="140" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-3" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;fillColor=light-dark(#FFFFFF,#FFFFFF);strokeColor=light-dark(#000000,#171717);fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="90" width="140" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-5" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=2;shape=mxgraph.arrows2.arrow;dy=0.58;dx=32.8;notch=0;rotation=90;fillColor=light-dark(#FFFFFF,#FFFFFF);gradientColor=none;strokeColor=light-dark(#000000,#171717);fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="50" width="115" x="11.25" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-6" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=2;shape=mxgraph.arrows2.arrow;dy=0.58;dx=32.8;notch=0;rotation=90;strokeColor=light-dark(#000000,#171717);fillColor=light-dark(#FFFFFF,#FFFFFF);fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="50" width="117.5" x="11.25" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-9" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=2;shape=mxgraph.arrows2.arrow;dy=0.58;dx=32.8;notch=0;rotation=-90;fillColor=light-dark(#FFFFFF,#FFFFFF);gradientColor=none;strokeColor=light-dark(#000000,#171717);direction=south;fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="72.5" width="50" x="158.75" y="248.75" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-11" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=2;shape=mxgraph.arrows2.arrow;dy=0.58;dx=32.8;notch=0;rotation=-60;fillColor=light-dark(#FFFFFF,#FFFFFF);gradientColor=none;strokeColor=light-dark(#000000,#171717);direction=south;fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="80" width="50" x="143.59" y="738.75" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000,#171717);fillColor=light-dark(#FFFFFF,#FFFFFF);fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="197.5" width="182.5" x="237.56" y="203.75" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000,#171717);fillColor=light-dark(#FFFFFF,#FFFFFF);fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="210" width="192.5" x="237.56" y="441.25" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000,#171717);fillColor=light-dark(#FFFFFF,#FFFFFF);fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="110" width="269.38" x="220.62" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000,#171717);fillColor=light-dark(#FFFFFF,#FFFFFF);fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="197.5" width="160" x="520" y="203.75" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-16" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=2;shape=mxgraph.arrows2.arrow;dy=0.58;dx=32.8;notch=0;rotation=-90;fillColor=light-dark(#FFFFFF,#FFFFFF);gradientColor=none;strokeColor=light-dark(#000000,#171717);direction=south;fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="72.5" width="50" x="438.81" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-17" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=2;shape=mxgraph.arrows2.arrow;dy=0.58;dx=32.8;notch=0;rotation=0;strokeColor=light-dark(#000000,#171717);fillColor=light-dark(#FFFFFF,#FFFFFF);fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="50" width="80" x="150" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-18" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=2;shape=mxgraph.arrows2.arrow;dy=0.58;dx=32.8;notch=0;rotation=-90;fillColor=light-dark(#FFFFFF,#FFFFFF);gradientColor=none;strokeColor=light-dark(#000000,#171717);direction=south;fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="70" width="50" x="450.56" y="476.25" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000,#171717);fillColor=light-dark(#FFFFFF,#FFFFFF);fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="185" width="180" x="520" y="446.25" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-20" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;strokeWidth=2;shape=mxgraph.arrows2.arrow;dy=0.58;dx=32.8;notch=0;rotation=-65;fillColor=light-dark(#FFFFFF,#FFFFFF);gradientColor=none;strokeColor=light-dark(#000000,#171717);direction=south;fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="102.5" width="50" x="450.56" y="623.75" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=light-dark(#000000,#171717);fillColor=light-dark(#FFFFFF,#FFFFFF);fontFamily=Times New Roman;fontSize=13;" value="" vertex="1">
+          <mxGeometry height="140" width="170" x="530" y="651.25" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-22" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=light-dark(#000000,#080808);fontFamily=Times New Roman;fontSize=13;" value="PENGEMBANGAN SISTEM INFORMASI LAYANAN DAN&lt;br data-start=&quot;41&quot; data-end=&quot;44&quot;&gt;&lt;br&gt;PENGANGGARAN BENGKEL JALONGJANG MOTOR BERBASIS&lt;br data-start=&quot;90&quot; data-end=&quot;93&quot;&gt;&lt;br&gt;ANDROID (STUDI KASUS BENGKEL JALONGJANG MOTOR)" vertex="1">
+          <mxGeometry height="90" width="500" x="164" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-23" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=light-dark(#000000,#060606);fontFamily=Times New Roman;fontSize=13;" value="kondisi awal" vertex="1">
+          <mxGeometry height="30" width="60" x="40" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-25" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=light-dark(#000000,#101010);fontFamily=Times New Roman;fontSize=13;" value="&lt;font&gt;&lt;br&gt;&lt;/font&gt;&lt;p data-start=&quot;165&quot; data-end=&quot;215&quot;&gt;&lt;/p&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;pelanggan menunggu lama&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;tanpa keterangan antrian&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p data-start=&quot;217&quot; data-end=&quot;277&quot;&gt;&lt;/p&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;pencatatan pendapatan&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;dihitung dan ditulis secara&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;manual&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p data-start=&quot;314&quot; data-end=&quot;364&quot;&gt;&lt;/p&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;pengeluaran anggaran yg tidak&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;terhitung dan acak&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="150" x="253.81" y="263.75" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-27" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=light-dark(#000000,#080808);fontFamily=Times New Roman;fontSize=13;" value="&lt;font&gt;&lt;br&gt;&lt;/font&gt;&lt;p data-start=&quot;371&quot; data-end=&quot;419&quot;&gt;&lt;/p&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;sistem antrian masih&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;menggunakan&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;prasarangka&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p data-start=&quot;421&quot; data-end=&quot;461&quot;&gt;&lt;/p&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;terjadi penumpukan&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;pada waktu tertentu&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p data-start=&quot;463&quot; data-end=&quot;513&quot;&gt;&lt;/p&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;pencatatan pendapatan&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;dan anggaran tidak&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;font&gt;valid&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="160" x="510" y="257.5" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-31" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=light-dark(#000000,#080808);fontFamily=Times New Roman;fontSize=13;" value="usulan&lt;br&gt;model" vertex="1">
+          <mxGeometry height="30" width="70" x="35" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-32" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Times New Roman;fontColor=light-dark(#000000,#0C0C0C);fontSize=13;" value="&lt;p data-start=&quot;541&quot; data-end=&quot;600&quot;&gt;sistem antrian dan pencatatan&lt;br&gt;pendapatan berbasis android&lt;/p&gt;&lt;p data-start=&quot;602&quot; data-end=&quot;651&quot;&gt;pelanggan dapat pengalaman&lt;br&gt;antri yg terstruktur.&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(12, 12, 12));&quot;&gt;pemilik bengkel mengatur&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(12, 12, 12));&quot;&gt;cuci harian&lt;/span&gt;&lt;/p&gt;&lt;p data-start=&quot;711&quot; data-end=&quot;760&quot;&gt;melakukan pencatata&lt;span style=&quot;background-color: transparent;&quot;&gt;n pendapatan&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;p data-start=&quot;762&quot; data-end=&quot;817&quot;&gt;sistem dibangun menggunakan:&lt;br&gt;fluter, laravel rest api&lt;/p&gt;" vertex="1">
+          <mxGeometry height="170" width="189.02" x="241.04000000000002" y="453.75" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-33" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Times New Roman;fontColor=light-dark(#000000,#0C0C0C);fontSize=13;" value="&lt;p data-start=&quot;824&quot; data-end=&quot;831&quot;&gt;tahap 1&lt;/p&gt;&lt;p data-start=&quot;833&quot; data-end=&quot;847&quot;&gt;fitur pemilik:&lt;/p&gt;&lt;p data-start=&quot;849&quot; data-end=&quot;860&quot;&gt;login admin&lt;/p&gt;&lt;p data-start=&quot;862&quot; data-end=&quot;907&quot;&gt;pengelola antrian servis&lt;br&gt;&lt;/p&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;dan cuci kendaraan&lt;/span&gt;&lt;/div&gt;&lt;p&gt;&lt;/p&gt;&lt;p data-start=&quot;909&quot; data-end=&quot;958&quot;&gt;pencatatan pendapatan&lt;br&gt;servis dan cuci kendaraan&lt;/p&gt;" vertex="1">
+          <mxGeometry height="190" width="160" x="530" y="441.25" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-34" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=light-dark(#000000,#171717);fontFamily=Times New Roman;fontSize=13;" value="&lt;p data-start=&quot;988&quot; data-end=&quot;995&quot;&gt;tahap 2&lt;/p&gt;&lt;p data-start=&quot;997&quot; data-end=&quot;1017&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;laporan pendapatan cucian&lt;/span&gt;&lt;/p&gt;&lt;p data-start=&quot;1047&quot; data-end=&quot;1088&quot;&gt;kendaraan&lt;/p&gt;" vertex="1">
+          <mxGeometry height="130" width="170" x="540" y="651.25" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-36" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=light-dark(#000000,#171717);fontFamily=Times New Roman;fontSize=13;" value="&lt;font&gt;kondisi&lt;br&gt;akkhir&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="35" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="50Yhk-0vLQiZGY7nJcbk-38" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontColor=light-dark(#000000,#080808);fontFamily=Times New Roman;fontSize=13;" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;antrian terstruktur, pencatatan&lt;br&gt;pendapatan&amp;nbsp; valid&lt;br&gt;serta tersusun rapih&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="232.5" x="237.56" y="738.75" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
