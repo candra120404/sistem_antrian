@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36" pages="3">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36" pages="5">
   <diagram id="HSp5IWkPPNTZE8OhQMM5" name="Halaman-3">
     <mxGraphModel dx="2200" dy="856" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -368,6 +368,75 @@
         <mxCell id="dKAgV94rk4aleBEK4y-3-175" edge="1" parent="1" source="dKAgV94rk4aleBEK4y-3-119" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontFamily=Times New Roman;fontSize=19;" target="dKAgV94rk4aleBEK4y-3-120">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="aUldksZLsYFmSHm_K9iL" name="Halaman-5">
+    <mxGraphModel dx="858" dy="535" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="wuv9Y8ONMJ4obE6yJE0o-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Times New Roman;" value="pelanggan" vertex="1">
+          <mxGeometry height="60" width="120" x="630" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="wuv9Y8ONMJ4obE6yJE0o-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Times New Roman;" value="admin" vertex="1">
+          <mxGeometry height="60" width="120" x="110" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="wuv9Y8ONMJ4obE6yJE0o-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontFamily=Times New Roman;" value="0&lt;div&gt;sistem antrian pencucian kendaraan&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="120" x="380" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="wuv9Y8ONMJ4obE6yJE0o-7" edge="1" parent="1" source="wuv9Y8ONMJ4obE6yJE0o-2" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.16;exitDx=0;exitDy=0;exitPerimeter=0;fontFamily=Times New Roman;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="340" as="sourcePoint" />
+            <mxPoint x="383" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wuv9Y8ONMJ4obE6yJE0o-8" connectable="0" parent="wuv9Y8ONMJ4obE6yJE0o-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Times New Roman;" value="data login &amp;amp; layanan" vertex="1">
+          <mxGeometry relative="1" x="-0.1896" y="2" as="geometry">
+            <mxPoint x="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wuv9Y8ONMJ4obE6yJE0o-10" edge="1" parent="1" source="wuv9Y8ONMJ4obE6yJE0o-1" style="endArrow=classic;html=1;rounded=0;exitX=-0.004;exitY=0.178;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.969;entryY=0.333;entryDx=0;entryDy=0;entryPerimeter=0;fontFamily=Times New Roman;" target="wuv9Y8ONMJ4obE6yJE0o-3" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="390" y="340" as="sourcePoint" />
+            <mxPoint x="500" y="161" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wuv9Y8ONMJ4obE6yJE0o-19" connectable="0" parent="wuv9Y8ONMJ4obE6yJE0o-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Times New Roman;" value="data &amp;amp; kendaraan" vertex="1">
+          <mxGeometry relative="1" x="0.0715" as="geometry">
+            <mxPoint x="12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wuv9Y8ONMJ4obE6yJE0o-20" edge="1" parent="1" source="wuv9Y8ONMJ4obE6yJE0o-1" style="endArrow=none;html=1;rounded=0;exitX=-0.007;exitY=0.842;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.969;entryY=0.671;entryDx=0;entryDy=0;entryPerimeter=0;fontFamily=Times New Roman;endFill=0;startArrow=classic;startFill=1;" target="wuv9Y8ONMJ4obE6yJE0o-3" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="490" y="210" as="sourcePoint" />
+            <mxPoint x="540" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wuv9Y8ONMJ4obE6yJE0o-24" connectable="0" parent="wuv9Y8ONMJ4obE6yJE0o-20" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Times New Roman;" value="nomor &amp;amp; psisi antrian" vertex="1">
+          <mxGeometry relative="1" x="0.2259" y="-1" as="geometry">
+            <mxPoint x="23" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wuv9Y8ONMJ4obE6yJE0o-22" edge="1" parent="1" source="wuv9Y8ONMJ4obE6yJE0o-2" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.833;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.024;entryY=0.67;entryDx=0;entryDy=0;entryPerimeter=0;fontFamily=Times New Roman;startArrow=classic;startFill=1;endFill=0;" target="wuv9Y8ONMJ4obE6yJE0o-3" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="410" y="240" as="sourcePoint" />
+            <mxPoint x="383" y="201" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wuv9Y8ONMJ4obE6yJE0o-23" connectable="0" parent="wuv9Y8ONMJ4obE6yJE0o-22" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Times New Roman;" value="token &amp;amp; data harian" vertex="1">
+          <mxGeometry relative="1" x="-0.4194" as="geometry">
+            <mxPoint x="26" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="mUXXBlf-SGtEtPzFPeWF" name="Halaman-6">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
       </root>
     </mxGraphModel>
   </diagram>
