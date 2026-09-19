@@ -115,7 +115,7 @@
             <p class="text-[10px] font-semibold text-slate-400 text-center">Pastikan nomor plat diisi dengan benar untuk verifikasi kedatangan.</p>
             @error('no_plat')
                 <p class="text-xs text-red-500 font-bold text-center mt-1">{{ $message }}</p>
-            @errorEnd
+            @enderror
         </div>
 
         {{-- ── 4. Ringkasan & Submit Button ── --}}
