@@ -56,4 +56,5 @@ Route::prefix('pelanggan')
         Route::get('/antrian/buat', [Pelanggan\AntrianPelangganController::class, 'create'])->name('antrian.create');
         Route::post('/antrian', [Pelanggan\AntrianPelangganController::class, 'store'])->name('antrian.store');
         Route::get('/antrian/status', [Pelanggan\AntrianPelangganController::class, 'status'])->name('antrian.status');
+        Route::delete('/antrian/{antrian}/batalkan', [Pelanggan\AntrianPelangganController::class, 'batalkan'])->name('antrian.batalkan');
     });

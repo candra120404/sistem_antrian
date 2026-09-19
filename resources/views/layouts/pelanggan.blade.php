@@ -2,13 +2,9 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="mobile-web-app-capable" content="yes">
-    <title>@yield('title', 'Bengkel Digital')</title>
+    <title>@yield('title', 'DealDeck Antrian Pelanggan')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -17,9 +13,7 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: { DEFAULT: '#0F172A', light: '#1E293B', dark: '#020617' },
                         brand: { DEFAULT: '#3B82F6', hover: '#2563EB', light: '#EFF6FF', soft: '#DBEAFE' },
-                        surface: { DEFAULT: '#F8FAFC', elevated: '#FFFFFF' }
                     },
                     borderRadius: {
                         '2xl': '1rem',
@@ -31,102 +25,160 @@
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        * { -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; overscroll-behavior-y: none; }
-        .safe-top { padding-top: env(safe-area-inset-top); }
-        .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
-        .nav-item { @apply flex-1 flex flex-col items-center py-2 gap-1 text-[11px] font-bold transition-all duration-200; }
-        .nav-item.active { @apply text-brand; }
-        .nav-item.inactive { @apply text-slate-400; }
-        .btn-press { @apply transition-all active:scale-95 active:opacity-90; }
-        .card-elevated {
-            @apply bg-white rounded-2xl shadow-[0_2px_16px_rgba(15,23,42,0.06)] border border-slate-100;
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; background-color: #f3f4f8; }
+        [x-cloak] { display: none !important; }
+
+        .deal-card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            border: 1px solid rgba(226, 232, 240, 0.7);
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease;
         }
-        .gradient-warm { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
-        .gradient-cool { background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); }
-        .gradient-brand { background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); }
-        .shimmer {
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-up { animation: fadeUp 0.4s ease-out forwards; }
-        .animate-fade-up-1 { animation: fadeUp 0.4s ease-out 0.05s forwards; opacity: 0; }
-        .animate-fade-up-2 { animation: fadeUp 0.4s ease-out 0.1s forwards; opacity: 0; }
-        .animate-fade-up-3 { animation: fadeUp 0.4s ease-out 0.15s forwards; opacity: 0; }
+
+        .btn-press { transition: all 0.15s ease; }
+        .btn-press:active { transform: scale(0.97); }
     </style>
 </head>
-<body class="bg-surface text-slate-900 antialiased">
+<body class="bg-[#f3f4f8] text-slate-800 antialiased min-h-screen" x-data="{ modalOpen: false, modalTitle: '', modalDesc: '', modalConfirmText: 'Ya, Lanjutkan', modalFormId: '' }">
 
-{{-- ── Header ── --}}
-<header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 sticky top-0 z-30 safe-top">
-    <div class="max-w-lg mx-auto px-5 h-14 flex items-center justify-between">
-        <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-lg gradient-brand flex items-center justify-center shadow-md shadow-brand/20">
-                <i class="fa-solid fa-bolt text-white text-sm"></i>
+    {{-- ── Top Navigation Header DealDeck Style ── --}}
+    <header class="bg-white border-b border-slate-200/60 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-2xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-blue-700 via-brand to-indigo-500 flex items-center justify-center text-white shadow-md shadow-brand/20">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                        <path d="M8 12h8"/>
+                        <path d="M12 8v8"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-slate-900 font-extrabold text-base tracking-tight leading-none">Deal<span class="text-brand">Deck</span></h1>
+                    <p class="text-[10px] text-slate-400 font-bold mt-0.5">Portal Pelanggan</p>
+                </div>
             </div>
-            <h1 class="text-sm font-extrabold tracking-tight text-slate-800">Bengkel<span class="text-brand">Pro</span></h1>
+
+            {{-- Right Top Profile --}}
+            <div class="flex items-center gap-2.5">
+                <div class="flex items-center gap-2 px-3 py-1 bg-slate-50 border border-slate-200/60 rounded-full">
+                    <div class="w-6 h-6 rounded-full bg-brand text-white flex items-center justify-center font-bold text-[10px]">
+                        {{ substr(auth()->user()->name, 0, 1) }}
+                    </div>
+                    <span class="text-xs font-bold text-slate-700 max-w-[100px] truncate">{{ auth()->user()->name }}</span>
+                </div>
+
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="w-9 h-9 rounded-full bg-slate-50 border border-slate-200/60 flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors" title="Keluar">
+                        <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+                    </button>
+                </form>
+            </div>
         </div>
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="p-2 -mr-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-colors">
-                <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
-            </button>
-        </form>
+    </header>
+
+    {{-- ── Main Container ── --}}
+    <main class="max-w-2xl mx-auto px-4 pt-6 pb-28">
+
+        {{-- Flash Success Alert --}}
+        @if(session('success'))
+            <div class="deal-card p-4 mb-5 border-l-4 border-l-emerald-500 flex items-center gap-3 animate-fade-in">
+                <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 font-bold text-xs">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <p class="text-xs font-bold text-slate-800 flex-1">{{ session('success') }}</p>
+            </div>
+        @endif
+
+        {{-- Flash Info Alert --}}
+        @if(session('info'))
+            <div class="deal-card p-4 mb-5 border-l-4 border-l-blue-500 flex items-center gap-3 animate-fade-in">
+                <div class="w-8 h-8 rounded-full bg-blue-100 text-brand flex items-center justify-center shrink-0 font-bold text-xs">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+                <p class="text-xs font-bold text-slate-800 flex-1">{{ session('info') }}</p>
+            </div>
+        @endif
+
+        {{-- Flash Error Alert --}}
+        @if(session('error'))
+            <div class="deal-card p-4 mb-5 border-l-4 border-l-red-500 flex items-center gap-3 animate-fade-in">
+                <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 font-bold text-xs">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+                <p class="text-xs font-bold text-slate-800 flex-1">{{ session('error') }}</p>
+            </div>
+        @endif
+
+        @yield('content')
+    </main>
+
+    {{-- ── Bottom Navigation Pill Bar (DealDeck Style) ── --}}
+    <nav class="fixed bottom-4 left-4 right-4 z-40 max-w-md mx-auto">
+        <div class="bg-white/95 backdrop-blur-md rounded-3xl border border-slate-200/80 shadow-2xl p-2 flex items-center justify-around">
+            <a href="{{ route('pelanggan.dashboard') }}"
+               class="flex-1 flex flex-col items-center py-2 rounded-2xl text-xs font-extrabold transition-all {{ request()->routeIs('pelanggan.dashboard') ? 'bg-brand text-white shadow-md shadow-brand/20' : 'text-slate-400 hover:text-slate-700' }}">
+                <i class="fa-solid fa-square-poll-vertical text-sm mb-1"></i>
+                <span>Beranda</span>
+            </a>
+
+            <a href="{{ route('pelanggan.antrian.create') }}"
+               class="flex-1 flex flex-col items-center py-2 rounded-2xl text-xs font-extrabold transition-all {{ request()->routeIs('pelanggan.antrian.create') ? 'bg-brand text-white shadow-md shadow-brand/20' : 'text-slate-400 hover:text-slate-700' }}">
+                <i class="fa-solid fa-circle-plus text-sm mb-1"></i>
+                <span>Buat Antrian</span>
+            </a>
+
+            <a href="{{ route('pelanggan.antrian.status') }}"
+               class="flex-1 flex flex-col items-center py-2 rounded-2xl text-xs font-extrabold transition-all {{ request()->routeIs('pelanggan.antrian.status') ? 'bg-brand text-white shadow-md shadow-brand/20' : 'text-slate-400 hover:text-slate-700' }}">
+                <i class="fa-solid fa-ticket text-sm mb-1"></i>
+                <span>Status Live</span>
+            </a>
+        </div>
+    </nav>
+
+    {{-- ── Reusable DealDeck Custom Modal Popup Component ── --}}
+    <div x-show="modalOpen" 
+         x-cloak
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
+        
+        <div x-show="modalOpen"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+             x-transition:leave-end="opacity-0 scale-95 translate-y-2"
+             class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 text-center space-y-4">
+            
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-brand flex items-center justify-center mx-auto text-xl font-bold">
+                <i class="fa-solid fa-circle-question"></i>
+            </div>
+
+            <div>
+                <h3 class="text-base font-extrabold text-slate-900 tracking-tight" x-text="modalTitle"></h3>
+                <p class="text-xs font-medium text-slate-500 mt-1 leading-relaxed" x-text="modalDesc"></p>
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <button type="button" @click="modalOpen = false"
+                        class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-2xl transition-all">
+                    Batal
+                </button>
+                <button type="button" @click="if (modalFormId) { document.getElementById(modalFormId).submit() } modalOpen = false"
+                        class="flex-1 py-2.5 bg-brand hover:bg-brand-hover text-white text-xs font-extrabold rounded-2xl shadow-lg shadow-brand/20 transition-all"
+                        x-text="modalConfirmText">
+                </button>
+            </div>
+        </div>
     </div>
-</header>
-
-{{-- ── Main Content ── --}}
-<main class="max-w-lg mx-auto px-5 pt-5 pb-28 safe-bottom">
-    @if(session('success'))
-        <div class="mb-5 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center gap-3 animate-fade-up">
-            <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center shrink-0">
-                <i class="fa-solid fa-check text-white text-xs"></i>
-            </div>
-            <p class="text-sm font-semibold text-emerald-800">{{ session('success') }}</p>
-        </div>
-    @endif
-    
-    @if(session('error'))
-        <div class="mb-5 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 animate-fade-up">
-            <div class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center shrink-0">
-                <i class="fa-solid fa-xmark text-white text-xs"></i>
-            </div>
-            <p class="text-sm font-semibold text-red-800">{{ session('error') }}</p>
-        </div>
-    @endif
-
-    @yield('content')
-</main>
-
-{{-- ── Bottom Navigation ── --}}
-<nav class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-slate-100 z-40 safe-bottom">
-    <div class="max-w-lg mx-auto flex items-center justify-around h-16 px-2">
-        <a href="{{ route('pelanggan.dashboard') }}"
-           class="nav-item {{ request()->routeIs('pelanggan.dashboard') ? 'active' : 'inactive' }}">
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center {{ request()->routeIs('pelanggan.dashboard') ? 'bg-brand/10' : '' }}">
-                <i class="fa-solid fa-house text-lg"></i>
-            </div>
-            <span>Beranda</span>
-        </a>
-        <a href="{{ route('pelanggan.antrian.status') }}"
-           class="nav-item {{ request()->routeIs('pelanggan.antrian.*') ? 'active' : 'inactive' }}">
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center {{ request()->routeIs('pelanggan.antrian.*') ? 'bg-brand/10' : '' }}">
-                <i class="fa-solid fa-ticket text-lg"></i>
-            </div>
-            <span>Antrian</span>
-        </a>
-    </div>
-</nav>
 
 @stack('scripts')
 </body>

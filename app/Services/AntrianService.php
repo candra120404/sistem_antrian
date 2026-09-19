@@ -16,36 +16,40 @@ use Illuminate\Support\Facades\DB;
 class AntrianService
 {
     /**
-     * Buat antrian baru untuk pelanggan.
-     * Secara otomatis menentukan nomor antrian dan posisi.
+     * Buat antrian baru untuk pelanggan (Hari Ini atau Besok).
      */
-    public function buatAntrian(User $user, JenisLayanan $layanan, string $noPlat): Antrian
+    public function buatAntrian(User $user, JenisLayanan $layanan, string $noPlat, ?string $tanggalBooking = null): Antrian
     {
+        $targetDate = $tanggalBooking ?? today()->toDateString();
         $pengaturan = Pengaturan::getAktif();
 
-        // 1. Cek Batas Maksimal Pelanggan Harian Total
-        $totalAntrianHariIni = Antrian::hariIni()->count();
-        if ($totalAntrianHariIni >= $pengaturan->batas_maksimal_pelanggan_harian) {
-            throw new \Exception("Batas kuota pendaftaran antrian hari ini telah penuh (Maksimal {$pengaturan->batas_maksimal_pelanggan_harian} pelanggan per hari).");
+        // 1. Cek Batas Maksimal Pelanggan Harian Total untuk Tanggal Booking
+        $totalAntrianTanggal = Antrian::whereDate('tanggal_booking', $targetDate)->count();
+        if ($totalAntrianTanggal >= $pengaturan->batas_maksimal_pelanggan_harian) {
+            $formattedDate = \Carbon\Carbon::parse($targetDate)->translatedFormat('d F Y');
+            throw new \Exception("Batas kuota pendaftaran antrian untuk tanggal {$formattedDate} telah penuh (Maksimal {$pengaturan->batas_maksimal_pelanggan_harian} pelanggan per hari).");
         }
 
-        // 2. Cek Batas Maksimum Booking per User
+        // 2. Cek Batas Maksimum Booking per User pada Tanggal Booking
         $userActiveBookings = Antrian::where('user_id', $user->id)
-            ->hariIni()
+            ->whereDate('tanggal_booking', $targetDate)
             ->aktif()
             ->count();
 
         if ($userActiveBookings >= $pengaturan->max_booking_per_user) {
-            throw new \Exception("Anda telah mencapai batas maksimum booking antrian aktif untuk hari ini (Maksimal {$pengaturan->max_booking_per_user} antrian aktif per pelanggan).");
+            throw new \Exception("Anda telah mencapai batas maksimum booking antrian aktif untuk tanggal ini (Maksimal {$pengaturan->max_booking_per_user} antrian per pelanggan).");
         }
 
-        return DB::transaction(function () use ($user, $layanan, $noPlat) {
-            $posisi = Antrian::where('status', 'menunggu')->count() + 1;
+        return DB::transaction(function () use ($user, $layanan, $noPlat, $targetDate) {
+            $posisi = Antrian::whereDate('tanggal_booking', $targetDate)
+                ->where('status', 'menunggu')
+                ->count() + 1;
 
             return Antrian::create([
                 'user_id'          => $user->id,
                 'jenis_layanan_id' => $layanan->id,
-                'nomor_antrian'    => Antrian::generateNomor(),
+                'tanggal_booking'  => $targetDate,
+                'nomor_antrian'    => Antrian::generateNomor($targetDate),
                 'nama_pelanggan'   => $user->name,
                 'no_plat'          => strtoupper($noPlat),
                 'jenis_kendaraan'  => $layanan->jenis_kendaraan,
@@ -84,8 +88,8 @@ class AntrianService
                 'tanggal'     => today(),
             ]);
 
-            // Re-kalkulasi posisi antria yang masih menunggu
-            Antrian::recalculatePosisi();
+            // Re-kalkulasi posisi antrian yang masih menunggu
+            Antrian::recalculatePosisi($antrian->tanggal_booking?->toDateString());
 
             return $antrian->fresh();
         });
@@ -98,7 +102,7 @@ class AntrianService
     {
         DB::transaction(function () use ($antrian) {
             $antrian->update(['status' => 'batal']);
-            Antrian::recalculatePosisi();
+            Antrian::recalculatePosisi($antrian->tanggal_booking?->toDateString());
         });
     }
 

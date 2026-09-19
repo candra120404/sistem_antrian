@@ -18,44 +18,40 @@ class AntrianPelangganController extends Controller
 
     /**
      * Tampilkan dashboard pelanggan.
-     * Cek apakah pelanggan sudah memiliki antrian aktif hari ini.
      */
     public function dashboard()
     {
-        $antrianAktif = Antrian::where('user_id', auth()->id())
-            ->hariIni()
+        $antrianAktif = Antrian::with('jenisLayanan')
+            ->where('user_id', auth()->id())
             ->aktif()
-            ->latest()
+            ->latest('id')
             ->first();
 
-        return view('pelanggan.dashboard', compact('antrianAktif'));
+        $riwayatAntrians = Antrian::with('jenisLayanan')
+            ->where('user_id', auth()->id())
+            ->latest('id')
+            ->take(5)
+            ->get();
+
+        return view('pelanggan.dashboard', compact('antrianAktif', 'riwayatAntrians'));
     }
 
     /**
-     * Tampilkan form buat antrian baru.
-     * Bisa pre-filter berdasarkan jenis kendaraan dari query string.
+     * Tampilkan form buat antrian baru (Hari Ini / Besok).
      */
     public function create(Request $request)
     {
-        // Cegah mendaftar dua kali di hari yang sama
-        $sudahAntri = Antrian::where('user_id', auth()->id())
-            ->hariIni()
-            ->aktif()
-            ->exists();
-
-        if ($sudahAntri) {
-            return redirect()->route('pelanggan.antrian.status')
-                ->with('info', 'Anda masih memiliki antrian aktif hari ini.');
-        }
-
         $jenisKendaraan = $request->input('jenis', null);
+        $pilihanTanggal = $request->input('tanggal', 'hari_ini'); // 'hari_ini' atau 'besok'
+
+        $targetDate = $pilihanTanggal === 'besok' ? today()->addDay()->toDateString() : today()->toDateString();
 
         $layanans = JenisLayanan::aktif()
             ->when($jenisKendaraan, fn ($q) => $q->where('jenis_kendaraan', $jenisKendaraan))
             ->orderBy('harga')
             ->get();
 
-        return view('pelanggan.antrian.create', compact('layanans', 'jenisKendaraan'));
+        return view('pelanggan.antrian.create', compact('layanans', 'jenisKendaraan', 'pilihanTanggal', 'targetDate'));
     }
 
     /**
@@ -64,11 +60,17 @@ class AntrianPelangganController extends Controller
     public function store(AntrianRequest $request)
     {
         try {
-            $layanan = JenisLayanan::findOrFail($request->jenis_layanan_id);
-            $antrian = $this->antrianService->buatAntrian(auth()->user(), $layanan, $request->no_plat);
+            $pilihanTanggal = $request->input('pilihan_tanggal', 'hari_ini');
+            $tanggalBooking = $pilihanTanggal === 'besok' 
+                ? today()->addDay()->toDateString() 
+                : today()->toDateString();
 
+            $layanan = JenisLayanan::findOrFail($request->jenis_layanan_id);
+            $antrian = $this->antrianService->buatAntrian(auth()->user(), $layanan, $request->no_plat, $tanggalBooking);
+
+            $labelTanggal = $pilihanTanggal === 'besok' ? 'besok' : 'hari ini';
             return redirect()->route('pelanggan.antrian.status')
-                ->with('success', "Anda berhasil mendaftar! Nomor antrian Anda: {$antrian->nomor_antrian}");
+                ->with('success', "Anda berhasil mendaftar antrian untuk {$labelTanggal}! Nomor antrian: {$antrian->nomor_antrian}");
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'Gagal mendaftar antrian: ' . $e->getMessage());
         }
@@ -81,13 +83,30 @@ class AntrianPelangganController extends Controller
     {
         $antrian = Antrian::with('jenisLayanan')
             ->where('user_id', auth()->id())
-            ->hariIni()
             ->aktif()
-            ->latest()
+            ->latest('id')
             ->first();
 
-        $totalMenunggu = Antrian::hariIni()->menunggu()->count();
+        $posisi = $antrian ? Antrian::hitungPosisi($antrian->id) : 0;
+        $totalMenunggu = $antrian ? Antrian::whereDate('tanggal_booking', $antrian->tanggal_booking)->menunggu()->count() : 0;
 
-        return view('pelanggan.antrian.status', compact('antrian', 'totalMenunggu'));
+        return view('pelanggan.antrian.status', compact('antrian', 'posisi', 'totalMenunggu'));
+    }
+
+    /**
+     * Batalkan antrian milik pelanggan.
+     */
+    public function batalkan(Antrian $antrian)
+    {
+        if ($antrian->user_id !== auth()->id()) {
+            return back()->with('error', 'Akses ditolak.');
+        }
+
+        try {
+            $this->antrianService->batalkanAntrian($antrian);
+            return redirect()->route('pelanggan.dashboard')->with('success', 'Antrian Anda berhasil dibatalkan.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal membatalkan antrian: ' . $e->getMessage());
+        }
     }
 }

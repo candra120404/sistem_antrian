@@ -37,7 +37,7 @@ class RevisiFiturTest extends TestCase
         $service->buatAntrian($user2, $layanan, 'B 2222 BBB');
 
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Batas kuota pendaftaran antrian hari ini telah penuh');
+        $this->expectExceptionMessage('Batas kuota pendaftaran antrian');
 
         $service->buatAntrian($user3, $layanan, 'B 3333 CCC');
     }
@@ -80,5 +80,19 @@ class RevisiFiturTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Laporan Keseluruhan Sistem');
         $response->assertSee('Rekapitulasi Per Jenis Layanan');
+    }
+
+    /** Test Fitur: Booking Untuk Besok */
+    public function test_booking_untuk_besok_berhasil()
+    {
+        $layanan = JenisLayanan::first();
+        $service = app(AntrianService::class);
+        $user = User::create(['name' => 'User Besok', 'username' => 'ubesok', 'email' => 'ubesok@test.com', 'password' => bcrypt('password'), 'role' => 'pelanggan']);
+
+        $besok = today()->addDay()->toDateString();
+        $antrian = $service->buatAntrian($user, $layanan, 'B 9999 BSK', $besok);
+
+        $this->assertEquals($besok, $antrian->tanggal_booking->toDateString());
+        $this->assertEquals('A001', $antrian->nomor_antrian);
     }
 }
