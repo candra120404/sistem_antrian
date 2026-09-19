@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Antrian;
 use App\Models\JenisLayanan;
+use App\Models\Pengaturan;
 use App\Models\Transaksi;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,24 @@ class AntrianService
      */
     public function buatAntrian(User $user, JenisLayanan $layanan, string $noPlat): Antrian
     {
+        $pengaturan = Pengaturan::getAktif();
+
+        // 1. Cek Batas Maksimal Pelanggan Harian Total
+        $totalAntrianHariIni = Antrian::hariIni()->count();
+        if ($totalAntrianHariIni >= $pengaturan->batas_maksimal_pelanggan_harian) {
+            throw new \Exception("Batas kuota pendaftaran antrian hari ini telah penuh (Maksimal {$pengaturan->batas_maksimal_pelanggan_harian} pelanggan per hari).");
+        }
+
+        // 2. Cek Batas Maksimum Booking per User
+        $userActiveBookings = Antrian::where('user_id', $user->id)
+            ->hariIni()
+            ->aktif()
+            ->count();
+
+        if ($userActiveBookings >= $pengaturan->max_booking_per_user) {
+            throw new \Exception("Anda telah mencapai batas maksimum booking antrian aktif untuk hari ini (Maksimal {$pengaturan->max_booking_per_user} antrian aktif per pelanggan).");
+        }
+
         return DB::transaction(function () use ($user, $layanan, $noPlat) {
             $posisi = Antrian::where('status', 'menunggu')->count() + 1;
 

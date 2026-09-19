@@ -187,6 +187,92 @@ class AntrianApiController extends Controller
         }
     }
 
+    /**
+     * GET /api/laporan-keseluruhan — laporan keseluruhan transaksi & antrian (admin only).
+     */
+    public function laporanKeseluruhan(Request $request): JsonResponse
+    {
+        try {
+            if (! $request->user()->isAdmin()) {
+                return $this->forbidden();
+            }
+
+            $dariTanggal   = $request->input('dari_tanggal', now()->startOfMonth()->toDateString());
+            $sampaiTanggal = $request->input('sampai_tanggal', today()->toDateString());
+            $jenisKendaraan= $request->input('jenis_kendaraan', 'semua');
+
+            $query = Antrian::with(['user', 'jenisLayanan', 'transaksi'])
+                ->whereDate('created_at', '>=', $dariTanggal)
+                ->whereDate('created_at', '<=', $sampaiTanggal);
+
+            if ($jenisKendaraan !== 'semua') {
+                $query->where('jenis_kendaraan', $jenisKendaraan);
+            }
+
+            $antrians = $query->orderBy('created_at', 'desc')->get();
+
+            $stats = [
+                'dari_tanggal'     => $dariTanggal,
+                'sampai_tanggal'   => $sampaiTanggal,
+                'total_pelanggan'  => $antrians->count(),
+                'total_selesai'    => $antrians->where('status', 'selesai')->count(),
+                'total_batal'      => $antrians->where('status', 'batal')->count(),
+                'total_pendapatan' => $antrians->sum(fn ($a) => $a->transaksi?->total_bayar ?? 0),
+                'total_motor'      => $antrians->where('jenis_kendaraan', 'motor')->count(),
+                'total_mobil'      => $antrians->where('jenis_kendaraan', 'mobil')->count(),
+            ];
+
+            return $this->success('Berhasil mengambil laporan keseluruhan.', [
+                'stats'    => $stats,
+                'antrians' => $antrians,
+            ]);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
+    }
+
+    /**
+     * GET /api/pengaturan — ambil pengaturan kuota & limit booking saat ini.
+     */
+    public function getPengaturan(): JsonResponse
+    {
+        try {
+            $pengaturan = \App\Models\Pengaturan::getAktif();
+            return $this->success('Berhasil.', $pengaturan);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
+    }
+
+    /**
+     * PUT /api/pengaturan — update pengaturan kuota & limit (admin only).
+     */
+    public function updatePengaturan(Request $request): JsonResponse
+    {
+        try {
+            if (! $request->user()->isAdmin()) {
+                return $this->forbidden();
+            }
+
+            $request->validate([
+                'batas_maksimal_pelanggan_harian' => 'required|integer|min:1',
+                'min_booking_per_user'          => 'required|integer|min:1',
+                'max_booking_per_user'          => 'required|integer|min:1|gte:min_booking_per_user',
+            ]);
+
+            $pengaturan = \App\Models\Pengaturan::getAktif();
+            $pengaturan->update($request->only([
+                'batas_maksimal_pelanggan_harian',
+                'min_booking_per_user',
+                'max_booking_per_user',
+            ]));
+
+            return $this->success('Pengaturan berhasil diperbarui.', $pengaturan);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
+    }
+
     // ─── Helper Response ──────────────────────────────────────────────────────
 
     private function success(string $message, mixed $data = null, int $code = 200): JsonResponse

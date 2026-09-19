@@ -4,101 +4,95 @@
 
 @section('content')
 {{-- ── Welcome Section ── --}}
-<div class="mt-8 mb-10">
-    <div class="flex items-center gap-4">
-        <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-white font-black">
+<div class="mb-6 animate-fade-up">
+    <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl gradient-brand flex items-center justify-center text-white font-bold text-sm shadow-md shadow-brand/20">
             {{ substr(auth()->user()->name, 0, 1) }}
         </div>
         <div>
-            <h2 class="text-xl font-black text-slate-900 tracking-tight">Halo, {{ explode(' ', auth()->user()->name)[0] }}! 👋</h2>
-            <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-0.5">Sudah cuci kendaraan hari ini?</p>
+            <p class="text-xs text-slate-400 font-medium">Selamat datang,</p>
+            <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">{{ explode(' ', auth()->user()->name)[0] }}</h2>
         </div>
     </div>
 </div>
 
-{{-- ── Kondisi: Jika Sudah Memiliki Antrian Aktif ── --}}
+{{-- ── Antrian Aktif ── --}}
 @if($antrianAktif)
-    <div class="bg-primary rounded-[2.5rem] p-10 text-white shadow-2xl shadow-primary/30 mb-10 relative overflow-hidden group">
-        <div class="relative z-10">
-            <div class="flex items-center gap-2 mb-6 uppercase tracking-[0.2em] text-[10px] font-black text-blue-300">
-                <div class="w-1.5 h-1.5 bg-brand rounded-full animate-ping"></div>
-                Antrian Aktif
-            </div>
-            
-            <h3 class="text-6xl font-black mb-4 tracking-tighter">{{ $antrianAktif->nomor_antrian }}</h3>
-
-            <div class="space-y-4 mb-10">
-                <div class="flex items-center gap-3">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                    <p class="text-sm font-bold text-slate-300">Status: <span class="text-white uppercase">{{ $antrianAktif->status }}</span></p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    <p class="text-sm font-bold text-slate-300">Posisi: <span class="text-white">Ke-{{ \App\Models\Antrian::hitungPosisi($antrianAktif->id) }}</span></p>
-                </div>
-            </div>
-
-            <a href="{{ route('pelanggan.antrian.status') }}"
-               class="flex items-center justify-center gap-2 bg-brand hover:bg-brand-hover text-white font-black py-4 px-8 rounded-2xl text-sm transition-all active:scale-95 shadow-xl shadow-brand/20">
-                <span>Pantau Antrian</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </a>
+    <div class="card-elevated p-5 mb-6 animate-fade-up-1 relative overflow-hidden" x-data="{ pulse: true }">
+        {{-- Status Badge --}}
+        <div class="flex items-center gap-2 mb-4">
+            <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span class="text-xs font-semibold text-emerald-600">Antrian Aktif</span>
         </div>
-        {{-- Ornament --}}
-        <div class="absolute -right-8 -bottom-8 opacity-5 text-white transform rotate-12 transition-transform group-hover:scale-110">
-            <svg width="200" height="200" viewBox="0 0 24 24" fill="currentColor"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path></svg>
+
+        {{-- Nomor Antrian --}}
+        <div class="text-center mb-5">
+            <p class="text-xs font-medium text-slate-400 mb-1">Nomor Anda</p>
+            <h3 class="text-5xl font-black text-slate-900 tracking-tighter">{{ $antrianAktif->nomor_antrian }}</h3>
         </div>
+
+        {{-- Detail Grid --}}
+        <div class="grid grid-cols-2 gap-3 mb-5">
+            <div class="bg-slate-50 rounded-xl p-3 text-center">
+                <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">Status</p>
+                <span class="text-sm font-bold text-slate-700 capitalize">{{ $antrianAktif->status }}</span>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-3 text-center">
+                <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">Posisi</p>
+                <span class="text-sm font-bold text-brand">Ke-{{ \App\Models\Antrian::hitungPosisi($antrianAktif->id) }}</span>
+            </div>
+        </div>
+
+        {{-- CTA --}}
+        <a href="{{ route('pelanggan.antrian.status') }}"
+           class="btn-press block w-full text-center py-3.5 bg-brand hover:bg-brand-hover text-white font-bold rounded-xl text-sm shadow-lg shadow-brand/20">
+            Pantau Antrian
+            <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+        </a>
     </div>
 @else
-    {{-- ── Kondisi: Belum Memiliki Antrian ── --}}
-    <div class="space-y-6">
-        <div class="p-6 bg-slate-50 border border-slate-100 rounded-3xl">
-            <h4 class="font-black text-slate-900 text-sm tracking-tight mb-1">Gunakan Antrian Digital</h4>
-            <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest leading-relaxed">Pilih kendaraan untuk mendapatkan nomor antrian sekarang.</p>
-        </div>
-
-        <div class="grid grid-cols-1 gap-4">
+    {{-- ── Pilih Layanan ── --}}
+    <div class="mb-6 animate-fade-up-1">
+        <h3 class="text-base font-bold text-slate-800 mb-3">Pilih Layanan</h3>
+        
+        <div class="grid grid-cols-2 gap-3">
+            {{-- Motor Card --}}
             <a href="{{ route('pelanggan.antrian.create', ['jenis' => 'motor']) }}"
-               class="group bg-white p-6 rounded-[2rem] border border-slate-100 flex items-center justify-between hover:border-brand/40 hover:shadow-xl hover:shadow-brand/5 transition-all active:scale-[0.98]">
-                <div class="flex items-center gap-5">
-                    <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 transition-transform group-hover:scale-110">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18.5" cy="17.5" r="3.5"></circle><circle cx="5.5" cy="17.5" r="3.5"></circle><circle cx="15" cy="7" r="1"></circle><path d="M10 10L12 14H18"></path><path d="M7 15L9 9H11L13 17"></path></svg>
-                    </div>
-                    <div>
-                        <h5 class="font-black text-slate-900 text-lg tracking-tight">Cuci Motor</h5>
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Mulai dari Rp 15rb</p>
-                    </div>
+               class="btn-press card-elevated p-4 flex flex-col items-center text-center group">
+                <div class="w-14 h-14 rounded-2xl gradient-warm flex items-center justify-center mb-3 text-amber-700 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-motorcycle text-2xl"></i>
                 </div>
-                <div class="p-2.5 bg-slate-50 rounded-xl text-slate-300 group-hover:bg-brand group-hover:text-white transition-all">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </div>
+                <h4 class="text-sm font-bold text-slate-800">Cuci Motor</h4>
+                <p class="text-[10px] text-slate-400 font-medium mt-0.5">Mulai Rp 15rb</p>
             </a>
 
+            {{-- Mobil Card --}}
             <a href="{{ route('pelanggan.antrian.create', ['jenis' => 'mobil']) }}"
-               class="group bg-white p-6 rounded-[2rem] border border-slate-100 flex items-center justify-between hover:border-brand/40 hover:shadow-xl hover:shadow-brand/5 transition-all active:scale-[0.98]">
-                <div class="flex items-center gap-5">
-                    <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 transition-transform group-hover:scale-110">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10H17L19 14V17H5V14L7 10Z"></path><path d="M7 10L9 6H15L17 10"></path><circle cx="7.5" cy="17" r="1.5"></circle><circle cx="16.5" cy="17" r="1.5"></circle></svg>
-                    </div>
-                    <div>
-                        <h5 class="font-black text-slate-900 text-lg tracking-tight">Cuci Mobil</h5>
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Mulai dari Rp 35rb</p>
-                    </div>
+               class="btn-press card-elevated p-4 flex flex-col items-center text-center group">
+                <div class="w-14 h-14 rounded-2xl gradient-cool flex items-center justify-center mb-3 text-indigo-700 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-car text-2xl"></i>
                 </div>
-                <div class="p-2.5 bg-slate-50 rounded-xl text-slate-300 group-hover:bg-brand group-hover:text-white transition-all">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </div>
+                <h4 class="text-sm font-bold text-slate-800">Cuci Mobil</h4>
+                <p class="text-[10px] text-slate-400 font-medium mt-0.5">Mulai Rp 35rb</p>
             </a>
         </div>
     </div>
 @endif
 
-{{-- ── Info Card ── --}}
-<div class="mt-12 p-8 bg-slate-900 rounded-[2rem] text-white relative overflow-hidden">
-    <h5 class="text-sm font-black uppercase tracking-widest text-brand mb-2">Jam Operasional</h5>
-    <p class="text-xs font-medium text-slate-400 leading-relaxed">Bengkel kami buka setiap hari mulai pukul <span class="text-white font-bold">08:00 sampai 17:00 WIB</span>.</p>
-    <div class="absolute -right-4 -bottom-4 opacity-10">
-        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+{{-- ── Info Section ── --}}
+<div class="animate-fade-up-2">
+    <h3 class="text-base font-bold text-slate-800 mb-3">Informasi</h3>
+    <div class="card-elevated p-4 flex items-start gap-3">
+        <div class="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 text-slate-500">
+            <i class="fa-regular fa-clock text-sm"></i>
+        </div>
+        <div>
+            <h4 class="text-sm font-semibold text-slate-800">Jam Operasional</h4>
+            <p class="text-xs text-slate-400 mt-0.5 leading-relaxed">Buka setiap hari <span class="font-semibold text-slate-600">08:00 - 17:00 WIB</span>.</p>
+        </div>
     </div>
 </div>
 @endsection

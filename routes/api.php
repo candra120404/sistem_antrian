@@ -33,6 +33,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/harga', [AntrianApiController::class, 'harga']);
     Route::put('/harga/{id}', [AntrianApiController::class, 'updateHarga']);
 
-    // Laporan Harian
+    // Laporan & Pengaturan
     Route::get('/data-harian', [AntrianApiController::class, 'dataHarian']);
+    Route::get('/laporan-keseluruhan', [AntrianApiController::class, 'laporanKeseluruhan']);
+    Route::get('/pengaturan', [AntrianApiController::class, 'getPengaturan']);
+    Route::put('/pengaturan', [AntrianApiController::class, 'updatePengaturan']);
 });

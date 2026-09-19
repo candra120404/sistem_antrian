@@ -3,76 +3,108 @@
 @section('title', 'Buat Antrian')
 
 @section('content')
-<div class="mt-8 mb-10">
-    <a href="{{ route('pelanggan.dashboard') }}" class="inline-flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-50 px-4 py-2 rounded-xl mb-6 hover:bg-slate-100 transition-colors">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        Kembali
+{{-- ── Header ── --}}
+<div class="flex items-center gap-3 mb-6 animate-fade-up">
+    <a href="{{ route('pelanggan.dashboard') }}" class="btn-press p-2.5 -ml-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl">
+        <i class="fa-solid fa-arrow-left"></i>
     </a>
-    <h2 class="text-3xl font-black text-slate-900 tracking-tighter">Pilih Layanan</h2>
-    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">Lengkapi data pendaftaran Anda</p>
+    <div>
+        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Pilih Layanan</h2>
+        <p class="text-xs text-slate-400 font-medium">Lengkapi data pendaftaran</p>
+    </div>
 </div>
 
-<form action="{{ route('pelanggan.antrian.store') }}" method="POST" id="form-antrian" class="space-y-8">
+<form action="{{ route('pelanggan.antrian.store') }}" method="POST" id="form-antrian">
     @csrf
 
-    {{-- Pilih Layanan --}}
-    <div class="space-y-4">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Layanan Tersedia</p>
-        <div class="grid grid-cols-1 gap-4">
-            @foreach($layanans as $l)
-                <label class="relative flex items-center p-6 rounded-3xl border-2 border-slate-50 cursor-pointer transition-all hover:bg-slate-50/50 has-[:checked]:border-brand has-[:checked]:bg-brand/5 has-[:checked]:shadow-xl has-[:checked]:shadow-brand/5 group">
-                    <input type="radio" name="jenis_layanan_id" value="{{ $l->id }}"
-                           class="w-5 h-5 text-brand border-slate-300 focus:ring-brand"
-                           data-harga="{{ $l->harga }}"
-                           required {{ $loop->first ? 'checked' : '' }}>
-                    <div class="ml-5 flex-1">
-                        <p class="font-black text-slate-800 tracking-tight">{{ $l->nama_layanan }}</p>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">{{ $l->jenis_kendaraan }}</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-lg font-black text-brand tracking-tighter">Rp{{ number_format($l->harga, 0, ',', '.') }}</p>
-                    </div>
-                    {{-- Active Indicator Icon --}}
-                    <div class="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-has-[:checked]:opacity-100 transition-opacity">
-                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                </label>
-            @endforeach
+    {{-- Vehicle Type Indicator --}}
+    @php
+        $vehicleType = request('jenis', 'motor');
+        $vehicleIcon = $vehicleType === 'motor' ? 'fa-motorcycle' : 'fa-car';
+        $vehicleColor = $vehicleType === 'motor' ? 'text-amber-600 bg-amber-50' : 'text-indigo-600 bg-indigo-50';
+    @endphp
+    <div class="flex items-center gap-3 mb-5 animate-fade-up-1">
+        <div class="w-10 h-10 rounded-xl {{ $vehicleColor }} flex items-center justify-center">
+            <i class="fa-solid {{ $vehicleIcon }}"></i>
         </div>
+        <div>
+            <p class="text-sm font-semibold text-slate-700 capitalize">{{ $vehicleType }}</p>
+            <p class="text-[10px] text-slate-400 font-medium">Pilih paket layanan</p>
+        </div>
+    </div>
+
+    {{-- Layanan Cards --}}
+    <div class="space-y-3 mb-6 animate-fade-up-1" x-data="{ selected: {{ $layanans->first()->id ?? 'null' }} }">
+        @foreach($layanans as $l)
+            <label 
+                class="block relative cursor-pointer btn-press"
+                @click="selected = {{ $l->id }}">
+                <input type="radio" name="jenis_layanan_id" value="{{ $l->id }}"
+                       class="peer sr-only"
+                       data-harga="{{ $l->harga }}"
+                       {{ $loop->first ? 'checked' : '' }}>
+                
+                <div class="p-4 rounded-2xl border-2 border-slate-100 bg-white transition-all peer-checked:border-brand peer-checked:bg-brand/5 peer-checked:shadow-md peer-checked:shadow-brand/10">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-5 h-5 rounded-full border-2 border-slate-200 flex items-center justify-center peer-checked:border-brand transition-all shrink-0">
+                                <div class="w-2.5 h-2.5 rounded-full bg-brand opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-sm font-bold text-slate-800 truncate">{{ $l->nama_layanan }}</p>
+                                <div class="flex items-center gap-2 mt-0.5">
+                                    <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded text-[10px] font-semibold">{{ $l->jenis_cuci ?? 'Cuci Reguler' }}</span>
+                                    <span class="text-[10px] text-slate-400 font-medium flex items-center gap-1">
+                                        <i class="fa-regular fa-clock"></i> {{ $l->est_durasi_menit ?? 20 }}m
+                                    </span>
+                                </div>
+                                <p class="text-[11px] text-slate-500 mt-1 line-clamp-1">{{ $l->deskripsi }}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0 ml-2">
+                            <p class="text-base font-extrabold text-brand">Rp{{ number_format($l->harga, 0, ',', '.') }}</p>
+                            <i class="fa-solid fa-circle-check text-brand opacity-0 peer-checked:opacity-100 transition-opacity text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+            </label>
+        @endforeach
     </div>
 
     {{-- No Plat --}}
-    <div class="space-y-4 pt-4">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Nomor Plat Kendaraan</p>
+    <div class="mb-6 animate-fade-up-2">
+        <label class="block text-sm font-semibold text-slate-700 mb-2">Nomor Plat Kendaraan</label>
         <div class="relative">
-            <input type="text" name="no_plat" placeholder="Contoh: B 1234 ABC"
-                   class="w-full text-3xl font-black tracking-widest text-center border-2 border-slate-100 bg-white rounded-3xl py-8 focus:border-brand focus:outline-none transition-all placeholder:text-slate-100 uppercase shadow-sm"
+            <input type="text" name="no_plat" placeholder="B 1234 ABC"
+                   class="w-full text-2xl font-black tracking-[0.2em] text-center uppercase bg-white border-2 border-slate-100 rounded-2xl py-5 px-4 focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10 transition-all placeholder:text-slate-200 placeholder:tracking-normal"
                    required oninput="this.value = this.value.toUpperCase()">
-            <div class="absolute left-6 top-1/2 -translate-y-1/2 text-slate-200">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2" ry="2"></rect><circle cx="7" cy="16" r="1"></circle><circle cx="17" cy="16" r="1"></circle><path d="M5 11l1.5-4.5h11L19 11"></path></svg>
-            </div>
         </div>
         @error('no_plat')
-            <p class="text-red-500 text-[10px] font-black uppercase tracking-widest mt-2 ml-1">{{ $message }}</p>
+            <p class="text-red-500 text-xs font-medium mt-2 ml-1">{{ $message }}</p>
         @enderror
     </div>
 
-    {{-- Summary --}}
-    <div class="p-8 bg-slate-900 rounded-[2.5rem] text-white">
-        <div class="flex justify-between items-center mb-1">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Total Estimasi:</span>
-            <span class="text-2xl font-black text-brand tracking-tighter" id="total-display">Rp 0</span>
+    {{-- Summary Card --}}
+    <div class="card-elevated p-4 mb-6 animate-fade-up-3">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-xs text-slate-400 font-medium">Total Estimasi</p>
+                <p class="text-xs text-slate-400">Bayar saat selesai</p>
+            </div>
+            <span class="text-xl font-black text-brand tracking-tight" id="total-display">Rp 0</span>
         </div>
-        <p class="text-[10px] text-slate-500 font-medium">
-            *Silakan melakukan pembayaran saat unit selesai dikerjakan.
-        </p>
     </div>
 
+    {{-- Submit --}}
     <button type="submit"
-            class="group w-full bg-brand hover:bg-brand-hover text-white font-black py-5 rounded-[2rem] shadow-2xl shadow-brand/20 transition-all active:scale-[0.98] text-lg flex items-center justify-center gap-3">
+            class="btn-press w-full bg-brand hover:bg-brand-hover text-white font-bold py-4 rounded-2xl shadow-lg shadow-brand/25 text-base flex items-center justify-center gap-2 mb-4">
         <span>Konfirmasi Antrian</span>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        <i class="fa-solid fa-arrow-right text-sm"></i>
     </button>
+    
+    <p class="text-center text-[10px] text-slate-400 font-medium mb-4">
+        Dengan mengkonfirmasi, Anda menyetujui syarat & ketentuan layanan.
+    </p>
 </form>
 @endsection
 

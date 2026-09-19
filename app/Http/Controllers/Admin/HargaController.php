@@ -19,24 +19,31 @@ class HargaController extends Controller
         return view('admin.harga.index', compact('layanans'));
     }
 
-    /** Update harga layanan berdasarkan ID. */
+    /** Update harga dan detail layanan berdasarkan ID. */
     public function update(Request $request, JenisLayanan $jenisLayanan)
     {
         $request->validate([
-            'harga'     => 'required|numeric|min:1000',
-            'is_active' => 'boolean',
+            'harga'            => 'required|numeric|min:1000',
+            'jenis_cuci'       => 'nullable|string|max:100',
+            'deskripsi'        => 'nullable|string',
+            'est_durasi_menit' => 'required|integer|min:5',
+            'is_active'        => 'boolean',
         ], [
             'harga.required' => 'Harga wajib diisi.',
             'harga.min'      => 'Harga minimal Rp 1.000.',
+            'est_durasi_menit.required' => 'Estimasi durasi wajib diisi.',
         ]);
 
         try {
             $jenisLayanan->update([
-                'harga'     => $request->harga,
-                'is_active' => $request->boolean('is_active', true),
+                'harga'            => $request->harga,
+                'jenis_cuci'       => $request->jenis_cuci,
+                'deskripsi'        => $request->deskripsi,
+                'est_durasi_menit' => $request->est_durasi_menit,
+                'is_active'        => $request->boolean('is_active', true),
             ]);
 
-            return back()->with('success', "Harga {$jenisLayanan->nama_layanan} berhasil diperbarui.");
+            return back()->with('success', "Detail & harga layanan {$jenisLayanan->nama_layanan} berhasil diperbarui.");
         } catch (\Exception $e) {
             return back()->with('error', 'Gagal memperbarui harga: ' . $e->getMessage());
         }

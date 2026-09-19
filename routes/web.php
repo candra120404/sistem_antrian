@@ -38,8 +38,13 @@ Route::prefix('admin')
         Route::get('/harga', [Admin\HargaController::class, 'index'])->name('harga.index');
         Route::put('/harga/{jenisLayanan}', [Admin\HargaController::class, 'update'])->name('harga.update');
 
-        // Data Harian
+        // Data Harian & Laporan Keseluruhan
         Route::get('/data-harian', [Admin\DataHarianController::class, 'index'])->name('data-harian.index');
+        Route::get('/laporan', [Admin\LaporanController::class, 'index'])->name('laporan.index');
+
+        // Pengaturan Kuota & Limits
+        Route::get('/pengaturan', [Admin\PengaturanController::class, 'index'])->name('pengaturan.index');
+        Route::put('/pengaturan', [Admin\PengaturanController::class, 'update'])->name('pengaturan.update');
     });
 
 // ── Pelanggan Routes (auth + is_pelanggan) ────────────────────────────────

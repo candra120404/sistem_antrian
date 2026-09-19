@@ -2,17 +2,29 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>@yield('title', 'Bengkel Digital')</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: { DEFAULT: '#0F172A', light: '#1E293B' },
-                        brand: { DEFAULT: '#3B82F6', light: '#EFF6FF' }
+                        primary: { DEFAULT: '#0F172A', light: '#1E293B', dark: '#020617' },
+                        brand: { DEFAULT: '#3B82F6', hover: '#2563EB', light: '#EFF6FF', soft: '#DBEAFE' },
+                        surface: { DEFAULT: '#F8FAFC', elevated: '#FFFFFF' }
+                    },
+                    borderRadius: {
+                        '2xl': '1rem',
+                        '3xl': '1.5rem',
+                        '4xl': '2rem',
                     }
                 }
             }
@@ -20,38 +32,76 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .nav-item { @apply flex-1 flex flex-col items-center py-4 gap-1 text-[10px] font-black uppercase tracking-widest transition-all; }
+        * { -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; overscroll-behavior-y: none; }
+        .safe-top { padding-top: env(safe-area-inset-top); }
+        .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+        .nav-item { @apply flex-1 flex flex-col items-center py-2 gap-1 text-[11px] font-bold transition-all duration-200; }
         .nav-item.active { @apply text-brand; }
         .nav-item.inactive { @apply text-slate-400; }
+        .btn-press { @apply transition-all active:scale-95 active:opacity-90; }
+        .card-elevated {
+            @apply bg-white rounded-2xl shadow-[0_2px_16px_rgba(15,23,42,0.06)] border border-slate-100;
+        }
+        .gradient-warm { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
+        .gradient-cool { background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); }
+        .gradient-brand { background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); }
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up { animation: fadeUp 0.4s ease-out forwards; }
+        .animate-fade-up-1 { animation: fadeUp 0.4s ease-out 0.05s forwards; opacity: 0; }
+        .animate-fade-up-2 { animation: fadeUp 0.4s ease-out 0.1s forwards; opacity: 0; }
+        .animate-fade-up-3 { animation: fadeUp 0.4s ease-out 0.15s forwards; opacity: 0; }
     </style>
 </head>
-<body class="bg-[#fcfdfe] text-slate-900 pb-28">
+<body class="bg-surface text-slate-900 antialiased">
 
-{{-- ── Mobile Header ── --}}
-<header class="bg-white border-b border-slate-50 sticky top-0 z-30 px-6 py-4 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-        <div class="w-8 h-8 bg-brand rounded-lg flex items-center justify-center">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+{{-- ── Header ── --}}
+<header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 sticky top-0 z-30 safe-top">
+    <div class="max-w-lg mx-auto px-5 h-14 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg gradient-brand flex items-center justify-center shadow-md shadow-brand/20">
+                <i class="fa-solid fa-bolt text-white text-sm"></i>
+            </div>
+            <h1 class="text-sm font-extrabold tracking-tight text-slate-800">Bengkel<span class="text-brand">Pro</span></h1>
         </div>
-        <h1 class="text-sm font-black tracking-tight uppercase">Bengkel<span class="text-brand">PRO</span></h1>
-    </div>
-    <div class="flex items-center gap-4">
         <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <button type="submit" class="p-2 bg-slate-50 rounded-xl text-slate-400">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            <button type="submit" class="p-2 -mr-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-colors">
+                <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
             </button>
         </form>
     </div>
 </header>
 
-{{-- ── Main Content Area ── --}}
-<main class="max-w-lg mx-auto p-6">
+{{-- ── Main Content ── --}}
+<main class="max-w-lg mx-auto px-5 pt-5 pb-28 safe-bottom">
     @if(session('success'))
-        <div class="mb-6 p-4 bg-emerald-50 border border-emerald-100 rounded-3xl flex items-center gap-3 animate-fade-in">
-             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-             <p class="text-xs font-bold text-emerald-800">{{ session('success') }}</p>
+        <div class="mb-5 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center gap-3 animate-fade-up">
+            <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-check text-white text-xs"></i>
+            </div>
+            <p class="text-sm font-semibold text-emerald-800">{{ session('success') }}</p>
+        </div>
+    @endif
+    
+    @if(session('error'))
+        <div class="mb-5 p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 animate-fade-up">
+            <div class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-xmark text-white text-xs"></i>
+            </div>
+            <p class="text-sm font-semibold text-red-800">{{ session('error') }}</p>
         </div>
     @endif
 
@@ -59,16 +109,20 @@
 </main>
 
 {{-- ── Bottom Navigation ── --}}
-<nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-50 shadow-[0_-8px_40px_rgba(0,0,0,0.04)] z-30">
-    <div class="max-w-lg mx-auto flex items-center justify-around h-20 px-4">
+<nav class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-slate-100 z-40 safe-bottom">
+    <div class="max-w-lg mx-auto flex items-center justify-around h-16 px-2">
         <a href="{{ route('pelanggan.dashboard') }}"
            class="nav-item {{ request()->routeIs('pelanggan.dashboard') ? 'active' : 'inactive' }}">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ request()->routeIs('pelanggan.dashboard') ? '2.5' : '2' }}" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            <span>Home</span>
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center {{ request()->routeIs('pelanggan.dashboard') ? 'bg-brand/10' : '' }}">
+                <i class="fa-solid fa-house text-lg"></i>
+            </div>
+            <span>Beranda</span>
         </a>
         <a href="{{ route('pelanggan.antrian.status') }}"
            class="nav-item {{ request()->routeIs('pelanggan.antrian.*') ? 'active' : 'inactive' }}">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{{ request()->routeIs('pelanggan.antrian.*') ? '2.5' : '2' }}" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center {{ request()->routeIs('pelanggan.antrian.*') ? 'bg-brand/10' : '' }}">
+                <i class="fa-solid fa-ticket text-lg"></i>
+            </div>
             <span>Antrian</span>
         </a>
     </div>

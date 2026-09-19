@@ -12,6 +12,9 @@ class JenisLayanan extends Model
     protected $fillable = [
         'nama_layanan',
         'jenis_kendaraan',
+        'jenis_cuci',
+        'deskripsi',
+        'est_durasi_menit',
         'harga',
         'is_active',
     ];
